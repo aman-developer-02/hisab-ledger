@@ -1,0 +1,960 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
+  <meta name="theme-color" content="#f8f7f4" />
+  <title>Hisab — Royal Ledger</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-pearl: #f8f7f4;
+      --bg-white: #ffffff;
+      --bg-subtle: #f1efe9;
+      --royal-navy: #111c44;
+      --royal-indigo: #1e2b58;
+      --gold-accent: #d97706;
+      --border: #e5e2da;
+      --text-dark: #111827;
+      --text-secondary: #4b5563;
+      --text-muted: #9ca3af;
+      --emerald: #059669;
+      --emerald-soft: #ecfdf5;
+      --ruby: #dc2626;
+      --ruby-soft: #fef2f2;
+      --amber-soft: #fffbeb;
+      --shadow-sm: 0 2px 8px rgba(17, 28, 68, 0.04);
+      --shadow-lg: 0 14px 32px rgba(17, 28, 68, 0.14);
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: 'Plus Jakarta Sans', -apple-system, BlinkMacSystemFont, sans-serif;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      background-color: var(--bg-pearl);
+      background-image: radial-gradient(circle at 50% 0%, rgba(217, 119, 6, 0.06), transparent 50%);
+      color: var(--text-dark);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+    }
+
+    /* Login & Pending Screens */
+    .gate-screen {
+      width: 100%;
+      max-width: 420px;
+      min-height: 100vh;
+      display: none;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 24px;
+      text-align: center;
+    }
+
+    .gate-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: 24px;
+      padding: 36px 28px;
+      width: 100%;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .auth-crest {
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      background: linear-gradient(135deg, var(--royal-navy), var(--royal-indigo));
+      border: 1px solid rgba(217, 119, 6, 0.45);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.5rem;
+      color: #fbbf24;
+      margin: 0 auto 18px auto;
+    }
+
+    .gate-card h2 {
+      font-size: 1.3rem;
+      color: var(--royal-navy);
+      margin-bottom: 8px;
+    }
+
+    .gate-card p {
+      font-size: 0.88rem;
+      color: var(--text-secondary);
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+
+    .google-btn {
+      width: 100%;
+      background: var(--royal-navy);
+      color: #ffffff;
+      border: none;
+      padding: 14px 18px;
+      border-radius: 14px;
+      font-size: 0.95rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 6px 16px rgba(17, 28, 68, 0.18);
+    }
+
+    .secondary-btn {
+      width: 100%;
+      background: var(--bg-subtle);
+      color: var(--text-dark);
+      border: 1px solid var(--border);
+      padding: 12px 16px;
+      border-radius: 12px;
+      font-size: 0.88rem;
+      font-weight: 600;
+      cursor: pointer;
+      margin-top: 10px;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 560px;
+      padding: 20px 16px 90px 16px;
+      display: none;
+    }
+
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 22px;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      gap: 11px;
+    }
+
+    .royal-crest {
+      width: 38px;
+      height: 38px;
+      border-radius: 12px;
+      background: linear-gradient(135deg, var(--royal-navy), var(--royal-indigo));
+      border: 1px solid rgba(217, 119, 6, 0.4);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.05rem;
+      color: #fbbf24;
+    }
+
+    .brand-title h1 {
+      font-size: 1.2rem;
+      font-weight: 700;
+      color: var(--royal-navy);
+      letter-spacing: -0.4px;
+    }
+
+    .sync-tag {
+      font-size: 0.72rem;
+      color: var(--text-secondary);
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 1px;
+      font-weight: 500;
+    }
+
+    .dot {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: var(--emerald);
+    }
+
+    .header-btns {
+      display: flex;
+      gap: 6px;
+    }
+
+    .export-btn {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      color: var(--royal-navy);
+      padding: 8px 11px;
+      border-radius: 10px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: var(--shadow-sm);
+      position: relative;
+    }
+
+    .admin-btn {
+      background: var(--amber-soft);
+      border-color: rgba(217, 119, 6, 0.35);
+      color: #92400e;
+    }
+
+    .badge-count {
+      background: var(--ruby);
+      color: #fff;
+      font-size: 0.65rem;
+      padding: 1px 5px;
+      border-radius: 999px;
+      margin-left: 4px;
+    }
+
+    .hero-card {
+      background: linear-gradient(135deg, var(--royal-navy) 0%, #1b2a63 100%);
+      border: 1px solid rgba(251, 191, 36, 0.25);
+      border-radius: 22px;
+      padding: 22px;
+      margin-bottom: 20px;
+      color: #ffffff;
+      box-shadow: var(--shadow-lg);
+    }
+
+    .hero-label {
+      font-size: 0.75rem;
+      color: #cbd5e1;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.8px;
+    }
+
+    .hero-net {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: -0.8px;
+      margin-top: 4px;
+      margin-bottom: 18px;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      padding-top: 16px;
+      border-top: 1px solid rgba(255, 255, 255, 0.12);
+    }
+
+    .mini-stat {
+      background: rgba(255, 255, 255, 0.06);
+      padding: 10px 14px;
+      border-radius: 12px;
+      border: 1px solid rgba(255, 255, 255, 0.08);
+    }
+
+    .mini-stat span {
+      font-size: 0.72rem;
+      color: #cbd5e1;
+      display: block;
+      margin-bottom: 3px;
+    }
+
+    .mini-stat strong {
+      font-size: 1.02rem;
+      font-weight: 700;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .gold-credit { color: #34d399; }
+    .gold-debit { color: #fda4af; }
+
+    .create-bar {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .create-bar input {
+      flex: 1;
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      color: var(--text-dark);
+      padding: 14px 16px;
+      border-radius: 14px;
+      font-size: 0.92rem;
+      outline: none;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .create-btn {
+      background: linear-gradient(135deg, var(--royal-navy), var(--royal-indigo));
+      color: #fbbf24;
+      border: 1px solid rgba(217, 119, 6, 0.3);
+      padding: 0 20px;
+      border-radius: 14px;
+      font-size: 0.9rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .search-box { margin-bottom: 14px; }
+
+    .search-box input {
+      width: 100%;
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      color: var(--text-dark);
+      padding: 10px 14px;
+      border-radius: 12px;
+      font-size: 0.85rem;
+      outline: none;
+    }
+
+    .cards-list {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+
+    .item-card {
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 14px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: var(--shadow-sm);
+    }
+
+    .item-left {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      flex: 1;
+      cursor: pointer;
+      min-width: 0;
+    }
+
+    .badge-icon {
+      width: 42px;
+      height: 42px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      font-size: 1.05rem;
+      flex-shrink: 0;
+    }
+
+    .item-details { min-width: 0; }
+    .item-name { font-size: 0.98rem; font-weight: 700; color: var(--royal-navy); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .item-sub { font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px; font-variant-numeric: tabular-nums; }
+    .item-actions { display: flex; align-items: center; gap: 6px; }
+
+    .pill-btn {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      border: 1px solid transparent;
+      font-size: 1.15rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .pill-minus { background: var(--ruby-soft); color: var(--ruby); border-color: rgba(220, 38, 38, 0.15); }
+    .pill-plus { background: var(--emerald-soft); color: var(--emerald); border-color: rgba(5, 150, 105, 0.15); }
+    .pill-del { background: transparent; color: var(--text-muted); font-size: 0.9rem; margin-left: 2px; }
+
+    .empty-box {
+      text-align: center;
+      padding: 48px 20px;
+      background: var(--bg-white);
+      border: 1px dashed #d4cfc3;
+      border-radius: 20px;
+    }
+
+    .empty-box h3 { font-size: 1rem; font-weight: 700; color: var(--royal-navy); margin-bottom: 6px; }
+    .empty-box p { font-size: 0.85rem; color: var(--text-secondary); }
+
+    .modal-backdrop {
+      position: fixed;
+      inset: 0;
+      background: rgba(17, 28, 68, 0.45);
+      backdrop-filter: blur(4px);
+      display: none;
+      align-items: flex-end;
+      justify-content: center;
+      z-index: 100;
+    }
+
+    .modal-backdrop.active { display: flex; }
+
+    .bottom-sheet {
+      background: var(--bg-white);
+      border-top: 2px solid var(--gold-accent);
+      width: 100%;
+      max-width: 560px;
+      border-radius: 24px 24px 0 0;
+      padding: 22px 20px 28px 20px;
+      max-height: 85vh;
+      overflow-y: auto;
+    }
+
+    .sheet-top {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 18px;
+    }
+
+    .sheet-top h3 { font-size: 1.05rem; font-weight: 700; color: var(--royal-navy); }
+
+    .close-x {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--bg-subtle);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--text-secondary);
+      cursor: pointer;
+      font-size: 0.85rem;
+    }
+
+    .bottom-sheet input {
+      width: 100%;
+      background: var(--bg-pearl);
+      border: 1px solid var(--border);
+      color: var(--text-dark);
+      padding: 15px;
+      border-radius: 14px;
+      font-size: 1rem;
+      margin-bottom: 12px;
+      outline: none;
+    }
+
+    .submit-btn {
+      width: 100%;
+      background: var(--royal-navy);
+      color: #fff;
+      border: none;
+      padding: 15px;
+      border-radius: 14px;
+      font-size: 0.98rem;
+      font-weight: 700;
+      cursor: pointer;
+    }
+
+    .log-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .log-note { font-size: 0.92rem; font-weight: 600; color: var(--text-dark); }
+    .log-date { font-size: 0.75rem; color: var(--text-muted); margin-top: 3px; }
+    .txt-green { color: var(--emerald); font-weight: 700; }
+    .txt-red { color: var(--ruby); font-weight: 700; }
+    .log-del { color: var(--text-muted); cursor: pointer; margin-left: 12px; font-size: 0.85rem; }
+
+    /* Admin User Row */
+    .user-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 12px 0;
+      border-bottom: 1px solid var(--border);
+      gap: 10px;
+    }
+    .user-info { min-width: 0; }
+    .user-name { font-size: 0.9rem; font-weight: 700; color: var(--royal-navy); }
+    .user-email { font-size: 0.75rem; color: var(--text-secondary); overflow: hidden; text-overflow: ellipsis; }
+    .user-status { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; margin-top: 2px; }
+    .btn-sm { padding: 6px 10px; border-radius: 8px; border: none; font-size: 0.75rem; font-weight: 700; cursor: pointer; }
+    .btn-approve { background: var(--emerald-soft); color: var(--emerald); }
+    .btn-revoke { background: var(--ruby-soft); color: var(--ruby); }
+  </style>
+</head>
+<body>
+
+  <!-- 1. Login Gate -->
+  <div class="gate-screen" id="authScreen" style="display:flex;">
+    <div class="gate-card">
+      <div class="auth-crest">₹</div>
+      <h2>Hisab Royal Ledger</h2>
+      <p>Sign in with your Google account to access your private ledger or request access from the admin.</p>
+      <button class="google-btn" onclick="loginGoogle()">Continue with Google</button>
+    </div>
+  </div>
+
+  <!-- 2. Pending Approval Gate -->
+  <div class="gate-screen" id="pendingScreen">
+    <div class="gate-card">
+      <div class="auth-crest">⏳</div>
+      <h2>Approval Pending</h2>
+      <p id="pendingMsg">Your access request has been sent to the admin. Once approved, you will get your own private ledger.</p>
+      <button class="secondary-btn" onclick="logoutUser()">Sign Out</button>
+    </div>
+  </div>
+
+  <!-- 3. Main App -->
+  <div class="container" id="appContainer">
+    <header>
+      <div class="brand">
+        <div class="royal-crest">₹</div>
+        <div class="brand-title">
+          <h1>Hisab</h1>
+          <div class="sync-tag"><span class="dot" id="dotStatus"></span><span id="syncLabel">Protected Sync</span></div>
+        </div>
+      </div>
+      <div class="header-btns">
+        <button class="export-btn admin-btn" id="adminPanelBtn" style="display:none;" onclick="openAdminModal()">
+          Users <span class="badge-count" id="pendingBadge" style="display:none;">0</span>
+        </button>
+        <button class="export-btn" onclick="exportCSV()">CSV</button>
+        <button class="export-btn" onclick="logoutUser()">Logout</button>
+      </div>
+    </header>
+
+    <div class="hero-card">
+      <div class="hero-label">Net Balance</div>
+      <div class="hero-net" id="netTotal">₹0</div>
+      <div class="hero-stats">
+        <div class="mini-stat">
+          <span>Total Credit (+)</span>
+          <strong class="gold-credit" id="creditTotal">₹0</strong>
+        </div>
+        <div class="mini-stat">
+          <span>Total Debit (−)</span>
+          <strong class="gold-debit" id="debitTotal">₹0</strong>
+        </div>
+      </div>
+    </div>
+
+    <div class="create-bar">
+      <input type="text" id="entityInput" placeholder="Add person or category (e.g. Rahul, Food)..." onkeydown="if(event.key==='Enter') addEntity()" />
+      <button class="create-btn" onclick="addEntity()">+ Add</button>
+    </div>
+
+    <div class="search-box" id="searchBox" style="display:none;">
+      <input type="text" id="searchField" placeholder="Search person or category..." oninput="render()" />
+    </div>
+
+    <div class="cards-list" id="cardsList"></div>
+  </div>
+
+  <!-- Transaction Sheet -->
+  <div class="modal-backdrop" id="txModal" onclick="bgClose(event, 'txModal')">
+    <div class="bottom-sheet" onclick="event.stopPropagation()">
+      <div class="sheet-top">
+        <h3 id="txTitle">New Entry</h3>
+        <div class="close-x" onclick="closeModal('txModal')">✕</div>
+      </div>
+      <input type="number" id="amountField" placeholder="Enter amount (₹)" inputmode="decimal" onkeydown="if(event.key==='Enter') saveTx()" />
+      <input type="text" id="noteField" placeholder="Note (optional, e.g. Chai, Lunch)" onkeydown="if(event.key==='Enter') saveTx()" />
+      <button class="submit-btn" id="saveTxBtn" onclick="saveTx()">Save Entry</button>
+    </div>
+  </div>
+
+  <!-- History Sheet -->
+  <div class="modal-backdrop" id="histModal" onclick="bgClose(event, 'histModal')">
+    <div class="bottom-sheet" onclick="event.stopPropagation()">
+      <div class="sheet-top">
+        <h3 id="histTitle">Records</h3>
+        <div class="close-x" onclick="closeModal('histModal')">✕</div>
+      </div>
+      <div id="histList"></div>
+    </div>
+  </div>
+
+  <!-- Admin Approval Sheet -->
+  <div class="modal-backdrop" id="adminModal" onclick="bgClose(event, 'adminModal')">
+    <div class="bottom-sheet" onclick="event.stopPropagation()">
+      <div class="sheet-top">
+        <h3>Manage User Access</h3>
+        <div class="close-x" onclick="closeModal('adminModal')">✕</div>
+      </div>
+      <div id="usersList"></div>
+    </div>
+  </div>
+
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, onSnapshot, enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+    // ====================================================
+    // YAHAN APNI EXACT ADMIN GMAIL ID LIKHEIN
+    // ====================================================
+    const ADMIN_EMAIL = "amanpandey6340@gmail.com";
+
+    const firebaseConfig = {
+      apiKey: "AIzaSyBsPrPoLnWjp7IgQelZxGWnxkBY8q5aPf8",
+      authDomain: "my-expense-manager-02.firebaseapp.com",
+      projectId: "my-expense-manager-02",
+      storageBucket: "my-expense-manager-02.firebasestorage.app",
+      messagingSenderId: "1067946891670",
+      appId: "1:1067946891670:web:e3173c931b2dbb588da5b7",
+      measurementId: "G-ZDS7JRJGE9"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+    const db = getFirestore(app);
+    enableIndexedDbPersistence(db).catch(() => {});
+
+    let docRef = null;
+    let unsubRecords = null;
+    let unsubProfile = null;
+    let unsubAdminUsers = null;
+    let records = {};
+    let allUsers = [];
+    let currentTarget = null;
+    let currentMode = null;
+
+    const royalJewels = [
+      { bg: "#eef2ff", fg: "#1e1b4b", border: "#c7d2fe" },
+      { bg: "#fef3c7", fg: "#78350f", border: "#fde68a" },
+      { bg: "#ecfdf5", fg: "#064e3b", border: "#a7f3d0" },
+      { bg: "#f3e8ff", fg: "#4c1d95", border: "#ddd6fe" },
+      { bg: "#ffe4e6", fg: "#881337", border: "#fecdd3" },
+      { bg: "#e0f2fe", fg: "#0c4a6e", border: "#bae6fd" }
+    ];
+
+    function getJewelStyle(name) {
+      let hash = 0;
+      for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
+      return royalJewels[Math.abs(hash) % royalJewels.length];
+    }
+
+    function showScreen(screenId) {
+      document.getElementById("authScreen").style.display = "none";
+      document.getElementById("pendingScreen").style.display = "none";
+      document.getElementById("appContainer").style.display = "none";
+      document.getElementById(screenId).style.display = screenId === "appContainer" ? "block" : "flex";
+    }
+
+    window.loginGoogle = async function() {
+      try {
+        await signInWithPopup(auth, provider);
+      } catch (err) {
+        alert("Login failed: " + err.message);
+      }
+    };
+
+    window.logoutUser = async function() {
+      if (unsubRecords) unsubRecords();
+      if (unsubProfile) unsubProfile();
+      if (unsubAdminUsers) unsubAdminUsers();
+      await signOut(auth);
+    };
+
+    onAuthStateChanged(auth, async (user) => {
+      if (!user) {
+        showScreen("authScreen");
+        records = {};
+        return;
+      }
+
+      const isAdmin = user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase();
+      const profileRef = doc(db, "user_profiles", user.uid);
+      const profileSnap = await getDoc(profileRef);
+
+      if (!profileSnap.exists()) {
+        await setDoc(profileRef, {
+          uid: user.uid,
+          name: user.displayName || "User",
+          email: user.email,
+          status: isAdmin ? "approved" : "pending",
+          requestedAt: new Date().toLocaleDateString('en-IN')
+        });
+      }
+
+      if (isAdmin) {
+        document.getElementById("adminPanelBtn").style.display = "inline-block";
+        listenAdminUsers();
+        launchLedger(user.uid);
+      } else {
+        document.getElementById("adminPanelBtn").style.display = "none";
+        // Listen in real-time so as soon as Admin clicks Approve, friend's screen unlocks automatically
+        unsubProfile = onSnapshot(profileRef, (snap) => {
+          const status = snap.exists() ? snap.data().status : "pending";
+          if (status === "approved") {
+            launchLedger(user.uid);
+          } else {
+            document.getElementById("pendingMsg").innerText =
+              status === "revoked"
+                ? `Access for ${user.email} has been revoked by the admin.`
+                : `Hi ${user.displayName || user.email}, your request is pending admin approval.`;
+            showScreen("pendingScreen");
+          }
+        });
+      }
+    });
+
+    function launchLedger(uid) {
+      showScreen("appContainer");
+      if (unsubRecords) unsubRecords();
+      docRef = doc(db, "users", uid);
+
+      unsubRecords = onSnapshot(docRef, (snap) => {
+        document.getElementById("syncLabel").innerText = "Protected Sync";
+        document.getElementById("dotStatus").style.background = "var(--emerald)";
+        records = snap.exists() ? (snap.data().records || {}) : {};
+        render();
+      }, () => {
+        document.getElementById("syncLabel").innerText = "Offline / Blocked";
+        document.getElementById("dotStatus").style.background = "var(--ruby)";
+      });
+    }
+
+    function listenAdminUsers() {
+      unsubAdminUsers = onSnapshot(collection(db, "user_profiles"), (snap) => {
+        allUsers = [];
+        let pendingCount = 0;
+        snap.forEach(d => {
+          const u = d.data();
+          if (u.email.toLowerCase() !== ADMIN_EMAIL.toLowerCase()) {
+            allUsers.push(u);
+            if (u.status === "pending") pendingCount++;
+          }
+        });
+        const badge = document.getElementById("pendingBadge");
+        if (pendingCount > 0) {
+          badge.style.display = "inline-block";
+          badge.innerText = pendingCount;
+        } else {
+          badge.style.display = "none";
+        }
+        if (document.getElementById("adminModal").classList.contains("active")) {
+          renderUsersList();
+        }
+      });
+    }
+
+    window.openAdminModal = function() {
+      renderUsersList();
+      document.getElementById("adminModal").classList.add("active");
+    };
+
+    function renderUsersList() {
+      const box = document.getElementById("usersList");
+      if (allUsers.length === 0) {
+        box.innerHTML = `<p style="color:var(--text-muted); text-align:center; padding:24px 0; font-size:0.88rem;">No friend login requests yet.</p>`;
+        return;
+      }
+      box.innerHTML = allUsers.map(u => `
+        <div class="user-row">
+          <div class="user-info">
+            <div class="user-name">${u.name}</div>
+            <div class="user-email">${u.email}</div>
+            <div class="user-status" style="color:${u.status === 'approved' ? 'var(--emerald)' : 'var(--gold-accent)'};">
+              ${u.status}
+            </div>
+          </div>
+          <div>
+            ${u.status !== 'approved'
+              ? `<button class="btn-sm btn-approve" onclick="setUserStatus('${u.uid}', 'approved')">Approve</button>`
+              : `<button class="btn-sm btn-revoke" onclick="setUserStatus('${u.uid}', 'revoked')">Revoke</button>`
+            }
+          </div>
+        </div>
+      `).join("");
+    }
+
+    window.setUserStatus = async function(uid, newStatus) {
+      await updateDoc(doc(db, "user_profiles", uid), { status: newStatus });
+    };
+
+    async function syncCloud() {
+      if (!docRef) return;
+      document.getElementById("syncLabel").innerText = "Saving...";
+      await setDoc(docRef, { records });
+      document.getElementById("syncLabel").innerText = "Protected Sync";
+    }
+
+    window.addEntity = async function() {
+      const input = document.getElementById("entityInput");
+      const name = input.value.trim();
+      if (!name) return;
+      if (!records[name]) {
+        records[name] = [];
+        render();
+        await syncCloud();
+      }
+      input.value = "";
+    };
+
+    window.removeEntity = async function(name) {
+      if (confirm(`Delete "${name}" and all its entries?`)) {
+        delete records[name];
+        render();
+        await syncCloud();
+      }
+    };
+
+    window.openTx = function(name, mode) {
+      currentTarget = name;
+      currentMode = mode;
+      const btn = document.getElementById("saveTxBtn");
+      document.getElementById("txTitle").innerText = `${mode === 'credit' ? '+ Credit' : '− Debit'} • ${name}`;
+      btn.style.background = mode === 'credit' ? 'var(--emerald)' : 'var(--ruby)';
+      document.getElementById("amountField").value = "";
+      document.getElementById("noteField").value = "";
+      document.getElementById("txModal").classList.add("active");
+      setTimeout(() => document.getElementById("amountField").focus(), 100);
+    };
+
+    window.saveTx = async function() {
+      const amt = parseFloat(document.getElementById("amountField").value);
+      const note = document.getElementById("noteField").value.trim();
+      if (!amt || amt <= 0) return;
+
+      const now = new Date();
+      const stamp = now.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) +
+                    ' • ' +
+                    now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', hour12: true });
+
+      records[currentTarget].unshift({
+        id: Date.now(),
+        type: currentMode,
+        amount: amt,
+        note: note || (currentMode === 'credit' ? 'Credit received' : 'Expense'),
+        timestamp: stamp
+      });
+
+      closeModal('txModal');
+      render();
+      await syncCloud();
+    };
+
+    window.removeTx = async function(name, id) {
+      records[name] = records[name].filter(item => item.id !== id);
+      openHist(name);
+      render();
+      await syncCloud();
+    };
+
+    window.openHist = function(name) {
+      document.getElementById("histTitle").innerText = name;
+      const listEl = document.getElementById("histList");
+      const items = records[name] || [];
+
+      if (items.length === 0) {
+        listEl.innerHTML = `<p style="color:var(--text-muted); text-align:center; padding:28px 0; font-size:0.88rem;">No records yet.</p>`;
+      } else {
+        listEl.innerHTML = items.map(item => `
+          <div class="log-row">
+            <div>
+              <div class="log-note">${item.note}</div>
+              <div class="log-date">${item.timestamp}</div>
+            </div>
+            <div>
+              <span class="${item.type === 'credit' ? 'txt-green' : 'txt-red'}">
+                ${item.type === 'credit' ? '+' : '−'}₹${item.amount}
+              </span>
+              <span class="log-del" onclick="removeTx('${name.replace(/'/g, "\\'")}', ${item.id})">✕</span>
+            </div>
+          </div>
+        `).join("");
+      }
+      document.getElementById("histModal").classList.add("active");
+    };
+
+    window.bgClose = function(e, id) { if (e.target.id === id) closeModal(id); };
+    window.closeModal = function(id) { document.getElementById(id).classList.remove("active"); };
+
+    window.render = function() {
+      const list = document.getElementById("cardsList");
+      const searchBox = document.getElementById("searchBox");
+      const q = document.getElementById("searchField").value.toLowerCase();
+
+      const names = Object.keys(records);
+      searchBox.style.display = names.length > 3 ? "block" : "none";
+
+      let cTotal = 0, dTotal = 0;
+      names.forEach(n => {
+        records[n].forEach(t => {
+          if (t.type === "credit") cTotal += t.amount;
+          else dTotal += t.amount;
+        });
+      });
+
+      document.getElementById("creditTotal").innerText = `₹${cTotal}`;
+      document.getElementById("debitTotal").innerText = `₹${dTotal}`;
+      const net = cTotal - dTotal;
+      const netEl = document.getElementById("netTotal");
+      netEl.innerText = `${net >= 0 ? '+' : '−'}₹${Math.abs(net)}`;
+      netEl.style.color = net >= 0 ? "#ffffff" : "#fda4af";
+
+      if (names.length === 0) {
+        list.innerHTML = `
+          <div class="empty-box">
+            <h3>Your Royal Ledger is Ready</h3>
+            <p>Add a person (e.g. Rahul) or category (e.g. Canteen, Grocery) above to start tracking.</p>
+          </div>
+        `;
+        return;
+      }
+
+      list.innerHTML = "";
+      names.filter(n => n.toLowerCase().includes(q)).forEach(name => {
+        let itemNet = 0;
+        records[name].forEach(t => itemNet += (t.type === "credit" ? t.amount : -t.amount));
+
+        const style = getJewelStyle(name);
+        const safe = name.replace(/'/g, "\\'");
+        const card = document.createElement("div");
+        card.className = "item-card";
+        card.innerHTML = `
+          <div class="item-left" onclick="openHist('${safe}')">
+            <div class="badge-icon" style="background:${style.bg}; color:${style.fg}; border:1px solid ${style.border};">
+              ${name.charAt(0).toUpperCase()}
+            </div>
+            <div class="item-details">
+              <div class="item-name">${name}</div>
+              <div class="item-sub">
+                <span style="color:${itemNet >= 0 ? 'var(--emerald)' : 'var(--ruby)'}; font-weight:700;">
+                  ${itemNet >= 0 ? '+' : '−'}₹${Math.abs(itemNet)}
+                </span> · ${records[name].length} entries
+              </div>
+            </div>
+          </div>
+          <div class="item-actions">
+            <button class="pill-btn pill-minus" onclick="openTx('${safe}', 'debit')" title="Debit">−</button>
+            <button class="pill-btn pill-plus" onclick="openTx('${safe}', 'credit')" title="Credit">+</button>
+            <button class="pill-btn pill-del" onclick="removeEntity('${safe}')" title="Delete">🗑</button>
+          </div>
+        `;
+        list.appendChild(card);
+      });
+    };
+
+    window.exportCSV = function() {
+      let csv = "Name/Category,Type,Amount,Note,Timestamp\n";
+      Object.keys(records).forEach(k => {
+        records[k].forEach(t => {
+          csv += `"${k}","${t.type}",${t.amount},"${t.note}","${t.timestamp}"\n`;
+        });
+      });
+      const blob = new Blob([csv], { type: "text/csv" });
+      const a = document.createElement("a");
+      a.href = URL.createObjectURL(blob);
+      a.download = `Hisab_${new Date().toISOString().slice(0, 10)}.csv`;
+      a.click();
+    };
+  </script>
+</body>
+</html>
