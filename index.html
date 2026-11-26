@@ -12,7 +12,6 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <!-- TradingView Lightweight Charts (Free) -->
   <script src="https://unpkg.com/lightweight-charts@4.1.3/dist/lightweight-charts.standalone.production.js"></script>
   <style>
     :root {
@@ -148,7 +147,6 @@
     .admin-btn { background: var(--amber-soft); border-color: rgba(217, 119, 6, 0.35); color: #92400e; }
     .badge-count { background: var(--ruby); color: #fff; font-size: 0.65rem; padding: 1px 5px; border-radius: 999px; margin-left: 4px; }
 
-    /* Main Tabs */
     .main-tabs {
       display: grid;
       grid-template-columns: 1fr 1fr;
@@ -176,7 +174,6 @@
       box-shadow: var(--shadow-sm);
     }
 
-    /* Hero Card */
     .hero-card {
       background: linear-gradient(135deg, var(--navy-primary) 0%, #1b2a63 100%);
       border: 1px solid rgba(251, 191, 36, 0.25);
@@ -306,7 +303,6 @@
       justify-content: space-between;
       box-shadow: var(--shadow-sm);
       gap: 10px;
-      transition: transform 0.1s;
     }
 
     .item-left { display: flex; align-items: center; gap: 12px; flex: 1; cursor: pointer; min-width: 0; }
@@ -333,7 +329,6 @@
     .pill-plus { background: var(--emerald-soft); color: var(--emerald); border-color: rgba(5, 150, 105, 0.15); }
     .pill-del { background: transparent; color: var(--text-muted); font-size: 0.9rem; }
 
-    /* Stock Sub-Tabs & Cards */
     .sub-tabs { display: flex; gap: 8px; margin-bottom: 12px; }
     .sub-tab {
       flex: 1;
@@ -366,20 +361,17 @@
     }
 
     /* Autocomplete Dropdown */
-    .autocomplete-wrap { position: relative; margin-bottom: 14px; }
+    .autocomplete-wrap { position: relative; margin-bottom: 12px; }
     .autocomplete-wrap input { margin-bottom: 0 !important; }
     .suggestions-box {
-      position: absolute;
-      top: calc(100% + 4px);
-      left: 0;
-      right: 0;
+      position: relative;
+      margin-top: 6px;
       background: var(--bg-white);
       border: 1px solid var(--navy-primary);
       border-radius: 14px;
       box-shadow: var(--shadow-lg);
-      max-height: 220px;
+      max-height: 210px;
       overflow-y: auto;
-      z-index: 250;
       display: none;
     }
 
@@ -393,10 +385,22 @@
       gap: 8px;
     }
     .suggestion-item:last-child { border-bottom: none; }
-    .suggestion-item:hover { background: var(--amber-soft); }
+    .suggestion-item:active, .suggestion-item:hover { background: var(--amber-soft); }
     .sug-sym { font-weight: 700; font-size: 0.9rem; color: var(--navy-primary); }
     .sug-name { font-size: 0.76rem; color: var(--text-secondary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 210px; }
     .sug-exch { font-size: 0.68rem; font-weight: 700; background: var(--bg-subtle); padding: 2px 6px; border-radius: 6px; color: var(--navy-primary); }
+
+    .selected-pill {
+      display: none;
+      margin-top: 8px;
+      padding: 8px 12px;
+      background: var(--emerald-soft);
+      border: 1px solid rgba(5, 150, 105, 0.3);
+      color: var(--emerald);
+      border-radius: 10px;
+      font-size: 0.8rem;
+      font-weight: 700;
+    }
 
     /* Chart Modal Elements */
     .tf-bar { display: flex; gap: 6px; margin-bottom: 12px; }
@@ -424,7 +428,6 @@
     .empty-box h3 { font-size: 1rem; font-weight: 700; color: var(--navy-primary); margin-bottom: 6px; }
     .empty-box p { font-size: 0.84rem; color: var(--text-secondary); line-height: 1.45; }
 
-    /* Modals */
     .modal-backdrop {
       position: fixed;
       inset: 0;
@@ -625,7 +628,6 @@
         <div class="sub-tab" id="subWatchlist" onclick="switchStockSub('watchlist')">👁 Watchlist</div>
       </div>
 
-      <!-- Add Stock + Direct CSV Upload Bar -->
       <div class="create-bar">
         <button class="create-btn" style="flex:1; padding:13px;" onclick="openStockModal()">+ Search & Add Stock</button>
         <label class="csv-upload-btn" title="Upload Zerodha Holdings CSV">
@@ -659,7 +661,7 @@
     </div>
   </div>
 
-  <!-- Add Stock Sheet with Live Autocomplete -->
+  <!-- Add Stock Sheet with Bulletproof Autocomplete -->
   <div class="modal-backdrop" id="stockModal" onclick="bgClose(event, 'stockModal')">
     <div class="bottom-sheet" onclick="event.stopPropagation()">
       <div class="sheet-top">
@@ -676,6 +678,7 @@
       <span class="field-label">Company Name or NSE/BSE Symbol</span>
       <div class="autocomplete-wrap">
         <input type="text" id="stockSymbolInput" placeholder="Type company name (e.g. Tata, HDFC, Zomato)..." autocomplete="off" oninput="onStockSearchInput(this.value)" />
+        <div class="selected-pill" id="selectedStockPill"></div>
         <div class="suggestions-box" id="suggestionsBox"></div>
       </div>
 
@@ -773,8 +776,8 @@
     let currentMainTab = "ledger";
     let currentStockSub = "holdings";
     let stockModalMode = "holding";
-    let selectedYahooTicker = null;
-    let selectedCompanyName = "";
+    let pickedStock = null; // { ticker, symbol, name }
+    let currentSuggestions = [];
     let autoRefreshTimer = null;
     let searchDebounce = null;
     let activeChartTicker = null;
@@ -785,7 +788,6 @@
     let selectedMode = "UPI / Online";
     let selectedPurpose = "Personal Kharcha";
 
-    // Instant Offline Fallback List for Popular NSE Stocks (Zero Delay)
     const POPULAR_NSE = [
       { ticker: "RELIANCE.NS", symbol: "RELIANCE", name: "Reliance Industries Ltd", exch: "NSE" },
       { ticker: "TCS.NS", symbol: "TCS", name: "Tata Consultancy Services Ltd", exch: "NSE" },
@@ -832,26 +834,34 @@
       return badgeThemes[Math.abs(hash) % badgeThemes.length];
     }
 
-    // ==================== FAST MULTI-PROXY FETCHER ====================
+    // ==================== MULTI-HOST FAST FETCHER ====================
     async function fastFetchJSON(targetUrl) {
-      const proxies = [
-        async () => {
-          const r = await fetch(`https://corsproxy.io/?${encodeURIComponent(targetUrl)}`);
-          if (!r.ok) throw new Error();
-          return await r.json();
-        },
-        async () => {
-          const r = await fetch(`https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}`);
-          if (!r.ok) throw new Error();
-          return await r.json();
-        },
-        async () => {
-          const r = await fetch(`https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(targetUrl)}`);
-          if (!r.ok) throw new Error();
-          return await r.json();
-        }
+      const altUrl = targetUrl.replace("query1.finance.yahoo.com", "query2.finance.yahoo.com");
+      const endpoints = [
+        `https://corsproxy.io/?${encodeURIComponent(targetUrl)}`,
+        `https://corsproxy.io/?${encodeURIComponent(altUrl)}`,
+        `https://api.allorigins.win/raw?url=${encodeURIComponent(targetUrl)}`,
+        `https://api.codetabs.com/v1/proxy?quest=${encodeURIComponent(altUrl)}`
       ];
-      return Promise.any(proxies.map(fn => fn()));
+
+      return Promise.any(
+        endpoints.map(async (ep) => {
+          const ctrl = new AbortController();
+          const timer = setTimeout(() => ctrl.abort(), 4500);
+          try {
+            const res = await fetch(ep, { signal: ctrl.signal });
+            clearTimeout(timer);
+            if (!res.ok) throw new Error("HTTP " + res.status);
+            const text = await res.text();
+            const json = JSON.parse(text);
+            if (!json || json.error) throw new Error("Invalid JSON");
+            return json;
+          } catch (err) {
+            clearTimeout(timer);
+            throw err;
+          }
+        })
+      );
     }
 
     function showScreen(screenId) {
@@ -1017,7 +1027,7 @@
         if (!autoRefreshTimer) {
           autoRefreshTimer = setInterval(() => {
             if (currentMainTab === "invest") refreshAllPrices(true);
-          }, 10000); // Live update every 10 seconds
+          }, 10000);
         }
       }
     };
@@ -1029,27 +1039,27 @@
       renderStocks();
     };
 
-    // ==================== LIVE SEARCH AUTOCOMPLETE ====================
+    // ==================== FIXED AUTOCOMPLETE SEARCH ====================
     window.onStockSearchInput = function(val) {
-      selectedYahooTicker = null;
+      pickedStock = null;
+      document.getElementById("selectedStockPill").style.display = "none";
       const q = val.trim();
       const box = document.getElementById("suggestionsBox");
+
       if (q.length < 1) {
         box.style.display = "none";
         return;
       }
 
-      // 1. Instant local match first
       const localMatches = POPULAR_NSE.filter(s =>
         s.symbol.toLowerCase().includes(q.toLowerCase()) ||
         s.name.toLowerCase().includes(q.toLowerCase())
-      ).slice(0, 5);
+      ).slice(0, 6);
 
       if (localMatches.length > 0) {
         renderSuggestions(localMatches);
       }
 
-      // 2. Live Yahoo Finance Search API for ALL Indian NSE/BSE stocks
       clearTimeout(searchDebounce);
       searchDebounce = setTimeout(async () => {
         try {
@@ -1067,13 +1077,14 @@
             if (indianQuotes.length > 0) renderSuggestions(indianQuotes);
           }
         } catch (e) {}
-      }, 250);
+      }, 220);
     };
 
     function renderSuggestions(list) {
+      currentSuggestions = list;
       const box = document.getElementById("suggestionsBox");
-      box.innerHTML = list.map(item => `
-        <div class="suggestion-item" onclick="pickSuggestion('${item.ticker}', '${item.symbol}', '${item.name.replace(/'/g, "\\'")}')">
+      box.innerHTML = list.map((item, idx) => `
+        <div class="suggestion-item" onclick="pickSuggestionByIndex(${idx})">
           <div>
             <div class="sug-sym">${item.symbol}</div>
             <div class="sug-name">${item.name}</div>
@@ -1084,21 +1095,25 @@
       box.style.display = "block";
     }
 
-    window.pickSuggestion = function(ticker, symbol, name) {
-      selectedYahooTicker = ticker;
-      selectedCompanyName = name;
-      document.getElementById("stockSymbolInput").value = `${symbol} — ${name}`;
+    window.pickSuggestionByIndex = function(idx) {
+      const item = currentSuggestions[idx];
+      if (!item) return;
+      pickedStock = { ticker: item.ticker, symbol: item.symbol, name: item.name };
+      document.getElementById("stockSymbolInput").value = item.symbol;
       document.getElementById("suggestionsBox").style.display = "none";
+      const pill = document.getElementById("selectedStockPill");
+      pill.innerText = `✓ Selected: ${item.symbol} (${item.name})`;
+      pill.style.display = "block";
     };
 
-    // ==================== FAST QUOTE & CHART FETCHER ====================
+    // ==================== BULLETPROOF QUOTE FETCHER ====================
     async function fetchLiveQuote(tickerOrSym) {
       let ticker = tickerOrSym.trim().toUpperCase();
       if (!ticker.endsWith(".NS") && !ticker.endsWith(".BO")) ticker += ".NS";
 
       const url = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(ticker)}?interval=1d&range=1d`;
       const data = await fastFetchJSON(url);
-      if (!data?.chart?.result?.[0]) throw new Error("Ticker not found");
+      if (!data?.chart?.result?.[0]) throw new Error("No chart result");
 
       const meta = data.chart.result[0].meta;
       return {
@@ -1111,12 +1126,13 @@
     }
 
     window.openStockModal = function() {
-      selectedYahooTicker = null;
-      selectedCompanyName = "";
+      pickedStock = null;
+      currentSuggestions = [];
       document.getElementById("stockSymbolInput").value = "";
       document.getElementById("stockQtyInput").value = "";
       document.getElementById("stockAvgInput").value = "";
       document.getElementById("suggestionsBox").style.display = "none";
+      document.getElementById("selectedStockPill").style.display = "none";
       const idx = currentStockSub === "watchlist" ? 1 : 0;
       selectStockMode(idx === 1 ? "watch" : "holding", document.querySelectorAll("#stockTypeChips .chip")[idx]);
       document.getElementById("stockModal").classList.add("active");
@@ -1131,44 +1147,57 @@
     };
 
     window.saveStock = async function() {
-      const rawVal = document.getElementById("stockSymbolInput").value.trim();
+      const rawVal = document.getElementById("stockSymbolInput").value.trim().toUpperCase();
       const qty = parseFloat(document.getElementById("stockQtyInput").value) || 0;
       const avgPrice = parseFloat(document.getElementById("stockAvgInput").value) || 0;
 
-      if (!rawVal) return alert("Please search and select a company first.");
+      if (!rawVal && !pickedStock) {
+        return alert("Please search and select a company first.");
+      }
       if (stockModalMode === "holding" && (qty <= 0 || avgPrice <= 0)) {
         return alert("Please enter valid Quantity and Average Buy Price.");
       }
 
-      const tickerToUse = selectedYahooTicker || (rawVal.split("—")[0].trim().toUpperCase() + ".NS");
+      const finalSymbol = pickedStock ? pickedStock.symbol : rawVal.replace(".NS", "").replace(".BO", "");
+      const finalTicker = pickedStock ? pickedStock.ticker : (finalSymbol + ".NS");
+      const finalName = pickedStock ? pickedStock.name : finalSymbol;
+
       const btn = document.getElementById("saveStockBtn");
-      btn.innerText = "Adding...";
+      btn.innerText = "Fetching Live Price...";
       btn.disabled = true;
 
-      try {
-        const quote = await fetchLiveQuote(tickerToUse);
-        investments.unshift({
-          id: Date.now(),
-          ticker: quote.ticker,
-          symbol: quote.symbol,
-          name: selectedCompanyName || quote.name,
-          listType: stockModalMode,
-          qty: stockModalMode === "holding" ? qty : 0,
-          avgPrice: stockModalMode === "holding" ? avgPrice : 0,
-          lastPrice: quote.lastPrice,
-          prevClose: quote.prevClose,
-          updatedAt: new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' })
-        });
+      let lastPrice = avgPrice || 0;
+      let prevClose = avgPrice || 0;
+      let updatedAt = "Syncing...";
 
-        closeModal("stockModal");
-        switchStockSub(stockModalMode === "holding" ? "holdings" : "watchlist");
-        await syncCloud();
-      } catch (err) {
-        alert("Could not fetch stock. Please pick a stock from the suggestion dropdown.");
-      } finally {
-        btn.innerText = "Add to Portfolio";
-        btn.disabled = false;
+      try {
+        const quote = await fetchLiveQuote(finalTicker);
+        lastPrice = quote.lastPrice;
+        prevClose = quote.prevClose;
+        updatedAt = new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+      } catch (e) {
+        // Fallback: If live proxy is temporarily rate-limited, still save the stock so user is never blocked!
+        updatedAt = "Will auto-sync";
       }
+
+      investments.unshift({
+        id: Date.now(),
+        ticker: finalTicker,
+        symbol: finalSymbol,
+        name: finalName,
+        listType: stockModalMode,
+        qty: stockModalMode === "holding" ? qty : 0,
+        avgPrice: stockModalMode === "holding" ? avgPrice : 0,
+        lastPrice,
+        prevClose,
+        updatedAt
+      });
+
+      btn.innerText = "Add to Portfolio";
+      btn.disabled = false;
+      closeModal("stockModal");
+      switchStockSub(stockModalMode === "holding" ? "holdings" : "watchlist");
+      await syncCloud();
     };
 
     // ==================== DIRECT ZERODHA CSV UPLOAD ====================
@@ -1222,7 +1251,7 @@
         if (addedCount > 0) {
           switchStockSub("holdings");
           await syncCloud();
-          refreshAllPrices(true); // Immediately fetch live NSE prices for all imported stocks
+          refreshAllPrices(true);
           alert(`${addedCount} Zerodha holdings imported! Fetching live market prices...`);
         } else {
           alert("No valid stock rows found in CSV.");
@@ -1231,24 +1260,28 @@
       reader.readAsText(file);
     };
 
-    // ==================== PARALLEL LIVE REFRESH (ALL STOCKS AT ONCE) ====================
+    // ==================== PARALLEL LIVE REFRESH ====================
     window.refreshAllPrices = async function(silent = false) {
       if (investments.length === 0) return;
       const liveText = document.getElementById("liveText");
       if (!silent) liveText.innerText = "SYNCING...";
 
+      let anyUpdated = false;
       await Promise.allSettled(
         investments.map(async (item, idx) => {
           const quote = await fetchLiveQuote(item.ticker || item.symbol);
-          investments[idx].lastPrice = quote.lastPrice;
-          investments[idx].prevClose = quote.prevClose;
-          investments[idx].updatedAt = new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+          if (quote.lastPrice > 0) {
+            investments[idx].lastPrice = quote.lastPrice;
+            investments[idx].prevClose = quote.prevClose;
+            investments[idx].updatedAt = new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+            anyUpdated = true;
+          }
         })
       );
 
       renderStocks();
       liveText.innerText = "LIVE (10s)";
-      await syncCloud();
+      if (anyUpdated) await syncCloud();
     };
 
     window.removeStock = async function(id, e) {
@@ -1295,7 +1328,7 @@
         for (let i = 0; i < timestamps.length; i++) {
           if (quote.open[i] != null && quote.high[i] != null && quote.low[i] != null && quote.close[i] != null) {
             candles.push({
-              time: timestamps[i] + 19800, // IST offset (+5:30)
+              time: timestamps[i] + 19800,
               open: Number(quote.open[i].toFixed(2)),
               high: Number(quote.high[i].toFixed(2)),
               low: Number(quote.low[i].toFixed(2)),
