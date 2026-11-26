@@ -3,9 +3,12 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no" />
-  <meta name="theme-color" content="#f8f7f4" />
-  <title>Hisab — Royal Ledger</title>
+  <meta name="theme-color" content="#111c44" />
+  <meta name="apple-mobile-web-app-capable" content="yes" />
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+  <title>ClearTally — Expense & Peer Ledger</title>
   <link rel="manifest" href="./manifest.json" />
+  <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='112' fill='%23111c44'/%3E%3Cpath d='M164 264L224 324L352 188' fill='none' stroke='%23fbbf24' stroke-width='36' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -14,9 +17,10 @@
       --bg-pearl: #f8f7f4;
       --bg-white: #ffffff;
       --bg-subtle: #f1efe9;
-      --royal-navy: #111c44;
-      --royal-indigo: #1e2b58;
+      --navy-primary: #111c44;
+      --navy-secondary: #1e2b58;
       --gold-accent: #d97706;
+      --gold-light: #fbbf24;
       --border: #e5e2da;
       --text-dark: #111827;
       --text-secondary: #4b5563;
@@ -47,7 +51,7 @@
       justify-content: center;
     }
 
-    /* Login & Pending Screens */
+    /* Loading & Gate Screens */
     .gate-screen {
       width: 100%;
       max-width: 420px;
@@ -69,25 +73,20 @@
       box-shadow: var(--shadow-lg);
     }
 
-    .auth-crest {
-      width: 56px;
-      height: 56px;
-      border-radius: 16px;
-      background: linear-gradient(135deg, var(--royal-navy), var(--royal-indigo));
-      border: 1px solid rgba(217, 119, 6, 0.45);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 1.5rem;
-      color: #fbbf24;
+    .brand-svg-lg {
+      width: 64px;
+      height: 64px;
       margin: 0 auto 18px auto;
+      display: block;
+      box-shadow: 0 8px 20px rgba(17, 28, 68, 0.2);
+      border-radius: 16px;
     }
 
     .gate-card h2 {
-      font-size: 1.3rem;
-      color: var(--royal-navy);
-      margin-bottom: 8px;
+      font-size: 1.4rem;
+      color: var(--navy-primary);
+      margin-bottom: 6px;
+      letter-spacing: -0.4px;
     }
 
     .gate-card p {
@@ -99,7 +98,7 @@
 
     .google-btn {
       width: 100%;
-      background: var(--royal-navy);
+      background: var(--navy-primary);
       color: #ffffff;
       border: none;
       padding: 14px 18px;
@@ -134,7 +133,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 22px;
+      margin-bottom: 20px;
     }
 
     .brand {
@@ -143,24 +142,17 @@
       gap: 11px;
     }
 
-    .royal-crest {
-      width: 38px;
-      height: 38px;
+    .brand-svg-sm {
+      width: 40px;
+      height: 40px;
       border-radius: 12px;
-      background: linear-gradient(135deg, var(--royal-navy), var(--royal-indigo));
-      border: 1px solid rgba(217, 119, 6, 0.4);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-weight: 700;
-      font-size: 1.05rem;
-      color: #fbbf24;
+      box-shadow: 0 4px 10px rgba(17, 28, 68, 0.15);
     }
 
     .brand-title h1 {
-      font-size: 1.2rem;
+      font-size: 1.22rem;
       font-weight: 700;
-      color: var(--royal-navy);
+      color: var(--navy-primary);
       letter-spacing: -0.4px;
     }
 
@@ -189,14 +181,13 @@
     .export-btn {
       background: var(--bg-white);
       border: 1px solid var(--border);
-      color: var(--royal-navy);
+      color: var(--navy-primary);
       padding: 8px 11px;
       border-radius: 10px;
       font-size: 0.78rem;
       font-weight: 600;
       cursor: pointer;
       box-shadow: var(--shadow-sm);
-      position: relative;
     }
 
     .admin-btn {
@@ -214,18 +205,19 @@
       margin-left: 4px;
     }
 
+    /* Hero Card */
     .hero-card {
-      background: linear-gradient(135deg, var(--royal-navy) 0%, #1b2a63 100%);
+      background: linear-gradient(135deg, var(--navy-primary) 0%, #1b2a63 100%);
       border: 1px solid rgba(251, 191, 36, 0.25);
       border-radius: 22px;
-      padding: 22px;
-      margin-bottom: 20px;
+      padding: 20px;
+      margin-bottom: 18px;
       color: #ffffff;
       box-shadow: var(--shadow-lg);
     }
 
     .hero-label {
-      font-size: 0.75rem;
+      font-size: 0.72rem;
       color: #cbd5e1;
       font-weight: 600;
       text-transform: uppercase;
@@ -233,38 +225,38 @@
     }
 
     .hero-net {
-      font-size: 2rem;
+      font-size: 1.95rem;
       font-weight: 700;
       letter-spacing: -0.8px;
       margin-top: 4px;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
       font-variant-numeric: tabular-nums;
     }
 
     .hero-stats {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 12px;
-      padding-top: 16px;
+      gap: 10px;
+      padding-top: 14px;
       border-top: 1px solid rgba(255, 255, 255, 0.12);
     }
 
     .mini-stat {
       background: rgba(255, 255, 255, 0.06);
-      padding: 10px 14px;
+      padding: 10px 12px;
       border-radius: 12px;
       border: 1px solid rgba(255, 255, 255, 0.08);
     }
 
     .mini-stat span {
-      font-size: 0.72rem;
+      font-size: 0.7rem;
       color: #cbd5e1;
       display: block;
       margin-bottom: 3px;
     }
 
     .mini-stat strong {
-      font-size: 1.02rem;
+      font-size: 0.98rem;
       font-weight: 700;
       font-variant-numeric: tabular-nums;
     }
@@ -275,7 +267,7 @@
     .create-bar {
       display: flex;
       gap: 8px;
-      margin-bottom: 16px;
+      margin-bottom: 14px;
     }
 
     .create-bar input {
@@ -283,7 +275,7 @@
       background: var(--bg-white);
       border: 1px solid var(--border);
       color: var(--text-dark);
-      padding: 14px 16px;
+      padding: 13px 15px;
       border-radius: 14px;
       font-size: 0.92rem;
       outline: none;
@@ -291,10 +283,10 @@
     }
 
     .create-btn {
-      background: linear-gradient(135deg, var(--royal-navy), var(--royal-indigo));
+      background: linear-gradient(135deg, var(--navy-primary), var(--navy-secondary));
       color: #fbbf24;
       border: 1px solid rgba(217, 119, 6, 0.3);
-      padding: 0 20px;
+      padding: 0 18px;
       border-radius: 14px;
       font-size: 0.9rem;
       font-weight: 700;
@@ -353,7 +345,7 @@
     }
 
     .item-details { min-width: 0; }
-    .item-name { font-size: 0.98rem; font-weight: 700; color: var(--royal-navy); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    .item-name { font-size: 0.98rem; font-weight: 700; color: var(--navy-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
     .item-sub { font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px; font-variant-numeric: tabular-nums; }
     .item-actions { display: flex; align-items: center; gap: 6px; }
 
@@ -382,9 +374,10 @@
       border-radius: 20px;
     }
 
-    .empty-box h3 { font-size: 1rem; font-weight: 700; color: var(--royal-navy); margin-bottom: 6px; }
+    .empty-box h3 { font-size: 1rem; font-weight: 700; color: var(--navy-primary); margin-bottom: 6px; }
     .empty-box p { font-size: 0.85rem; color: var(--text-secondary); }
 
+    /* Bottom Sheet Modals */
     .modal-backdrop {
       position: fixed;
       inset: 0;
@@ -405,7 +398,7 @@
       max-width: 560px;
       border-radius: 24px 24px 0 0;
       padding: 22px 20px 28px 20px;
-      max-height: 85vh;
+      max-height: 88vh;
       overflow-y: auto;
     }
 
@@ -413,10 +406,10 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 18px;
+      margin-bottom: 16px;
     }
 
-    .sheet-top h3 { font-size: 1.05rem; font-weight: 700; color: var(--royal-navy); }
+    .sheet-top h3 { font-size: 1.05rem; font-weight: 700; color: var(--navy-primary); }
 
     .close-x {
       width: 30px;
@@ -431,21 +424,62 @@
       font-size: 0.85rem;
     }
 
+    .field-label {
+      font-size: 0.75rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      text-transform: uppercase;
+      letter-spacing: 0.5px;
+      margin-bottom: 8px;
+      display: block;
+    }
+
+    /* Payment Mode & Purpose Chips */
+    .chip-group {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .chip {
+      padding: 8px 14px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--bg-pearl);
+      color: var(--text-secondary);
+      font-size: 0.82rem;
+      font-weight: 600;
+      cursor: pointer;
+      transition: all 0.15s;
+    }
+
+    .chip.selected {
+      background: var(--navy-primary);
+      color: #fbbf24;
+      border-color: var(--navy-primary);
+    }
+
     .bottom-sheet input {
       width: 100%;
       background: var(--bg-pearl);
       border: 1px solid var(--border);
       color: var(--text-dark);
-      padding: 15px;
+      padding: 14px;
       border-radius: 14px;
       font-size: 1rem;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       outline: none;
+    }
+
+    .bottom-sheet input:focus {
+      border-color: var(--navy-primary);
+      background: var(--bg-white);
     }
 
     .submit-btn {
       width: 100%;
-      background: var(--royal-navy);
+      background: var(--navy-primary);
       color: #fff;
       border: none;
       padding: 15px;
@@ -455,19 +489,48 @@
       cursor: pointer;
     }
 
+    /* History Log Item */
     .log-row {
       display: flex;
       justify-content: space-between;
       align-items: center;
       padding: 14px 0;
       border-bottom: 1px solid var(--border);
+      gap: 10px;
+    }
+
+    .log-title-line {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      flex-wrap: wrap;
     }
 
     .log-note { font-size: 0.92rem; font-weight: 600; color: var(--text-dark); }
-    .log-date { font-size: 0.75rem; color: var(--text-muted); margin-top: 3px; }
+
+    .tag-pill {
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 6px;
+      background: var(--bg-subtle);
+      color: var(--navy-primary);
+      border: 1px solid var(--border);
+    }
+
+    .mode-pill {
+      font-size: 0.68rem;
+      font-weight: 700;
+      padding: 2px 7px;
+      border-radius: 6px;
+      background: var(--amber-soft);
+      color: #92400e;
+    }
+
+    .log-date { font-size: 0.74rem; color: var(--text-muted); margin-top: 4px; }
     .txt-green { color: var(--emerald); font-weight: 700; }
     .txt-red { color: var(--ruby); font-weight: 700; }
-    .log-del { color: var(--text-muted); cursor: pointer; margin-left: 12px; font-size: 0.85rem; }
+    .log-del { color: var(--text-muted); cursor: pointer; margin-left: 10px; font-size: 0.85rem; }
 
     /* Admin User Row */
     .user-row {
@@ -479,7 +542,7 @@
       gap: 10px;
     }
     .user-info { min-width: 0; }
-    .user-name { font-size: 0.9rem; font-weight: 700; color: var(--royal-navy); }
+    .user-name { font-size: 0.9rem; font-weight: 700; color: var(--navy-primary); }
     .user-email { font-size: 0.75rem; color: var(--text-secondary); overflow: hidden; text-overflow: ellipsis; }
     .user-status { font-size: 0.7rem; font-weight: 700; text-transform: uppercase; margin-top: 2px; }
     .btn-sm { padding: 6px 10px; border-radius: 8px; border: none; font-size: 0.75rem; font-weight: 700; cursor: pointer; }
@@ -489,12 +552,29 @@
 </head>
 <body>
 
-  <!-- 1. Login Gate -->
-  <div class="gate-screen" id="authScreen" style="display:flex;">
+  <!-- 0. Session Check Screen -->
+  <div class="gate-screen" id="bootScreen" style="display:flex;">
     <div class="gate-card">
-      <div class="auth-crest">₹</div>
-      <h2>Hisab Royal Ledger</h2>
-      <p>Sign in with your Google account to access your private ledger or request access from the admin.</p>
+      <svg class="brand-svg-lg" viewBox="0 0 512 512">
+        <rect width="512" height="512" rx="112" fill="#111c44"/>
+        <rect x="24" y="24" width="464" height="464" rx="92" fill="none" stroke="#d97706" stroke-width="8" stroke-opacity="0.5"/>
+        <path d="M164 264L224 324L352 188" fill="none" stroke="#fbbf24" stroke-width="36" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <h2>ClearTally</h2>
+      <p style="margin-bottom:0;">Restoring your secure session...</p>
+    </div>
+  </div>
+
+  <!-- 1. Login Gate -->
+  <div class="gate-screen" id="authScreen">
+    <div class="gate-card">
+      <svg class="brand-svg-lg" viewBox="0 0 512 512">
+        <rect width="512" height="512" rx="112" fill="#111c44"/>
+        <rect x="24" y="24" width="464" height="464" rx="92" fill="none" stroke="#d97706" stroke-width="8" stroke-opacity="0.5"/>
+        <path d="M164 264L224 324L352 188" fill="none" stroke="#fbbf24" stroke-width="36" stroke-linecap="round" stroke-linejoin="round"/>
+      </svg>
+      <h2>ClearTally</h2>
+      <p>Sign in once with Google to track your daily expenses and peer balances securely.</p>
       <button class="google-btn" onclick="loginGoogle()">Continue with Google</button>
     </div>
   </div>
@@ -502,9 +582,9 @@
   <!-- 2. Pending Approval Gate -->
   <div class="gate-screen" id="pendingScreen">
     <div class="gate-card">
-      <div class="auth-crest">⏳</div>
+      <div class="brand-svg-lg" style="background:#111c44; color:#fbbf24; display:flex; align-items:center; justify-content:center; font-size:1.8rem;">⏳</div>
       <h2>Approval Pending</h2>
-      <p id="pendingMsg">Your access request has been sent to the admin. Once approved, you will get your own private ledger.</p>
+      <p id="pendingMsg">Your access request has been sent to the admin.</p>
       <button class="secondary-btn" onclick="logoutUser()">Sign Out</button>
     </div>
   </div>
@@ -513,9 +593,13 @@
   <div class="container" id="appContainer">
     <header>
       <div class="brand">
-        <div class="royal-crest">₹</div>
+        <svg class="brand-svg-sm" viewBox="0 0 512 512">
+          <rect width="512" height="512" rx="112" fill="#111c44"/>
+          <rect x="24" y="24" width="464" height="464" rx="92" fill="none" stroke="#d97706" stroke-width="10" stroke-opacity="0.5"/>
+          <path d="M164 264L224 324L352 188" fill="none" stroke="#fbbf24" stroke-width="38" stroke-linecap="round" stroke-linejoin="round"/>
+        </svg>
         <div class="brand-title">
-          <h1>Hisab</h1>
+          <h1>ClearTally</h1>
           <div class="sync-tag"><span class="dot" id="dotStatus"></span><span id="syncLabel">Protected Sync</span></div>
         </div>
       </div>
@@ -555,15 +639,27 @@
     <div class="cards-list" id="cardsList"></div>
   </div>
 
-  <!-- Transaction Sheet -->
+  <!-- Enhanced Transaction Sheet -->
   <div class="modal-backdrop" id="txModal" onclick="bgClose(event, 'txModal')">
     <div class="bottom-sheet" onclick="event.stopPropagation()">
       <div class="sheet-top">
         <h3 id="txTitle">New Entry</h3>
         <div class="close-x" onclick="closeModal('txModal')">✕</div>
       </div>
-      <input type="number" id="amountField" placeholder="Enter amount (₹)" inputmode="decimal" onkeydown="if(event.key==='Enter') saveTx()" />
-      <input type="text" id="noteField" placeholder="Note (optional, e.g. Chai, Lunch)" onkeydown="if(event.key==='Enter') saveTx()" />
+
+      <input type="number" id="amountField" placeholder="Enter amount (₹)" inputmode="decimal" />
+
+      <span class="field-label">Payment Mode</span>
+      <div class="chip-group" id="modeChips">
+        <div class="chip selected" onclick="selectMode('UPI / Online', this)">📱 UPI / Online</div>
+        <div class="chip" onclick="selectMode('Cash', this)">💵 Cash</div>
+        <div class="chip" onclick="selectMode('Card', this)">💳 Card</div>
+      </div>
+
+      <span class="field-label">Purpose / Type</span>
+      <div class="chip-group" id="purposeChips"></div>
+
+      <input type="text" id="noteField" placeholder="Specific details (e.g. Burger, Bus ticket, Rent)..." onkeydown="if(event.key==='Enter') saveTx()" />
       <button class="submit-btn" id="saveTxBtn" onclick="saveTx()">Save Entry</button>
     </div>
   </div>
@@ -592,7 +688,7 @@
 
   <script type="module">
     import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
-    import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
+    import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
     import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, onSnapshot, enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
     // ====================================================
@@ -612,6 +708,8 @@
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
+    setPersistence(auth, browserLocalPersistence).catch(() => {});
+
     const provider = new GoogleAuthProvider();
     const db = getFirestore(app);
     enableIndexedDbPersistence(db).catch(() => {});
@@ -622,10 +720,16 @@
     let unsubAdminUsers = null;
     let records = {};
     let allUsers = [];
-    let currentTarget = null;
-    let currentMode = null;
 
-    const royalJewels = [
+    let currentTarget = null;
+    let currentType = null;
+    let selectedMode = "UPI / Online";
+    let selectedPurpose = "Personal Kharcha";
+
+    const debitPurposes = ["Udhar Diya", "Personal Kharcha", "Food / Snacks", "Travel / Auto", "Shopping / Bill", "Split / Party"];
+    const creditPurposes = ["Udhar Wapsi", "Udhar Liya", "Pocket Money / Salary", "Refund / Cashback", "Gift / Other"];
+
+    const badgeThemes = [
       { bg: "#eef2ff", fg: "#1e1b4b", border: "#c7d2fe" },
       { bg: "#fef3c7", fg: "#78350f", border: "#fde68a" },
       { bg: "#ecfdf5", fg: "#064e3b", border: "#a7f3d0" },
@@ -634,13 +738,14 @@
       { bg: "#e0f2fe", fg: "#0c4a6e", border: "#bae6fd" }
     ];
 
-    function getJewelStyle(name) {
+    function getBadgeStyle(name) {
       let hash = 0;
       for (let i = 0; i < name.length; i++) hash = name.charCodeAt(i) + ((hash << 5) - hash);
-      return royalJewels[Math.abs(hash) % royalJewels.length];
+      return badgeThemes[Math.abs(hash) % badgeThemes.length];
     }
 
     function showScreen(screenId) {
+      document.getElementById("bootScreen").style.display = "none";
       document.getElementById("authScreen").style.display = "none";
       document.getElementById("pendingScreen").style.display = "none";
       document.getElementById("appContainer").style.display = "none";
@@ -649,6 +754,7 @@
 
     window.loginGoogle = async function() {
       try {
+        await setPersistence(auth, browserLocalPersistence);
         await signInWithPopup(auth, provider);
       } catch (err) {
         alert("Login failed: " + err.message);
@@ -671,17 +777,19 @@
 
       const isAdmin = user.email.toLowerCase() === ADMIN_EMAIL.toLowerCase();
       const profileRef = doc(db, "user_profiles", user.uid);
-      const profileSnap = await getDoc(profileRef);
 
-      if (!profileSnap.exists()) {
-        await setDoc(profileRef, {
-          uid: user.uid,
-          name: user.displayName || "User",
-          email: user.email,
-          status: isAdmin ? "approved" : "pending",
-          requestedAt: new Date().toLocaleDateString('en-IN')
-        });
-      }
+      try {
+        const profileSnap = await getDoc(profileRef);
+        if (!profileSnap.exists()) {
+          await setDoc(profileRef, {
+            uid: user.uid,
+            name: user.displayName || "User",
+            email: user.email,
+            status: isAdmin ? "approved" : "pending",
+            requestedAt: new Date().toLocaleDateString('en-IN')
+          });
+        }
+      } catch (e) {}
 
       if (isAdmin) {
         document.getElementById("adminPanelBtn").style.display = "inline-block";
@@ -689,7 +797,6 @@
         launchLedger(user.uid);
       } else {
         document.getElementById("adminPanelBtn").style.display = "none";
-        // Listen in real-time so as soon as Admin clicks Approve, friend's screen unlocks automatically
         unsubProfile = onSnapshot(profileRef, (snap) => {
           const status = snap.exists() ? snap.data().status : "pending";
           if (status === "approved") {
@@ -711,13 +818,13 @@
       docRef = doc(db, "users", uid);
 
       unsubRecords = onSnapshot(docRef, (snap) => {
-        document.getElementById("syncLabel").innerText = "Protected Sync";
+        document.getElementById("syncLabel").innerText = "Cloud Synced";
         document.getElementById("dotStatus").style.background = "var(--emerald)";
         records = snap.exists() ? (snap.data().records || {}) : {};
         render();
       }, () => {
-        document.getElementById("syncLabel").innerText = "Offline / Blocked";
-        document.getElementById("dotStatus").style.background = "var(--ruby)";
+        document.getElementById("syncLabel").innerText = "Offline Saved";
+        document.getElementById("dotStatus").style.background = "var(--gold-accent)";
       });
     }
 
@@ -783,7 +890,7 @@
       if (!docRef) return;
       document.getElementById("syncLabel").innerText = "Saving...";
       await setDoc(docRef, { records });
-      document.getElementById("syncLabel").innerText = "Protected Sync";
+      document.getElementById("syncLabel").innerText = "Cloud Synced";
     }
 
     window.addEntity = async function() {
@@ -806,12 +913,32 @@
       }
     };
 
-    window.openTx = function(name, mode) {
+    window.selectMode = function(mode, el) {
+      selectedMode = mode;
+      document.querySelectorAll("#modeChips .chip").forEach(c => c.classList.remove("selected"));
+      el.classList.add("selected");
+    };
+
+    window.selectPurpose = function(purpose, el) {
+      selectedPurpose = purpose;
+      document.querySelectorAll("#purposeChips .chip").forEach(c => c.classList.remove("selected"));
+      el.classList.add("selected");
+    };
+
+    window.openTx = function(name, type) {
       currentTarget = name;
-      currentMode = mode;
+      currentType = type;
       const btn = document.getElementById("saveTxBtn");
-      document.getElementById("txTitle").innerText = `${mode === 'credit' ? '+ Credit' : '− Debit'} • ${name}`;
-      btn.style.background = mode === 'credit' ? 'var(--emerald)' : 'var(--ruby)';
+      document.getElementById("txTitle").innerText = `${type === 'credit' ? '+ Credit' : '− Debit'} • ${name}`;
+      btn.style.background = type === 'credit' ? 'var(--emerald)' : 'var(--ruby)';
+
+      const purposes = type === 'credit' ? creditPurposes : debitPurposes;
+      selectedPurpose = purposes[0];
+      const purposeBox = document.getElementById("purposeChips");
+      purposeBox.innerHTML = purposes.map((p, idx) => `
+        <div class="chip ${idx === 0 ? 'selected' : ''}" onclick="selectPurpose('${p}', this)">${p}</div>
+      `).join("");
+
       document.getElementById("amountField").value = "";
       document.getElementById("noteField").value = "";
       document.getElementById("txModal").classList.add("active");
@@ -830,9 +957,11 @@
 
       records[currentTarget].unshift({
         id: Date.now(),
-        type: currentMode,
+        type: currentType,
         amount: amt,
-        note: note || (currentMode === 'credit' ? 'Credit received' : 'Expense'),
+        mode: selectedMode,
+        purpose: selectedPurpose,
+        note: note || selectedPurpose,
         timestamp: stamp
       });
 
@@ -859,10 +988,14 @@
         listEl.innerHTML = items.map(item => `
           <div class="log-row">
             <div>
-              <div class="log-note">${item.note}</div>
+              <div class="log-title-line">
+                <span class="log-note">${item.note}</span>
+                ${item.purpose && item.purpose !== item.note ? `<span class="tag-pill">${item.purpose}</span>` : ''}
+                <span class="mode-pill">${item.mode || 'Online'}</span>
+              </div>
               <div class="log-date">${item.timestamp}</div>
             </div>
-            <div>
+            <div style="white-space:nowrap;">
               <span class="${item.type === 'credit' ? 'txt-green' : 'txt-red'}">
                 ${item.type === 'credit' ? '+' : '−'}₹${item.amount}
               </span>
@@ -903,7 +1036,7 @@
       if (names.length === 0) {
         list.innerHTML = `
           <div class="empty-box">
-            <h3>Your Royal Ledger is Ready</h3>
+            <h3>Welcome to ClearTally</h3>
             <p>Add a person (e.g. Rahul) or category (e.g. Canteen, Grocery) above to start tracking.</p>
           </div>
         `;
@@ -915,7 +1048,7 @@
         let itemNet = 0;
         records[name].forEach(t => itemNet += (t.type === "credit" ? t.amount : -t.amount));
 
-        const style = getJewelStyle(name);
+        const style = getBadgeStyle(name);
         const safe = name.replace(/'/g, "\\'");
         const card = document.createElement("div");
         card.className = "item-card";
@@ -944,23 +1077,24 @@
     };
 
     window.exportCSV = function() {
-      let csv = "Name/Category,Type,Amount,Note,Timestamp\n";
+      let csv = "Name/Category,Type,Amount,Payment Mode,Purpose,Note,Timestamp\n";
       Object.keys(records).forEach(k => {
         records[k].forEach(t => {
-          csv += `"${k}","${t.type}",${t.amount},"${t.note}","${t.timestamp}"\n`;
+          csv += `"${k}","${t.type}",${t.amount},"${t.mode || 'Online'}","${t.purpose || ''}","${t.note}","${t.timestamp}"\n`;
         });
       });
       const blob = new Blob([csv], { type: "text/csv" });
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
-      a.download = `Hisab_${new Date().toISOString().slice(0, 10)}.csv`;
+      a.download = `ClearTally_Ledger_${new Date().toISOString().slice(0, 10)}.csv`;
       a.click();
     };
   </script>
+
   <script>
-  if ("serviceWorker" in navigator) {
-    navigator.serviceWorker.register("./sw.js");
-  }
-</script>
+    if ("serviceWorker" in navigator) {
+      navigator.serviceWorker.register("./sw.js");
+    }
+  </script>
 </body>
 </html>

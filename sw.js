@@ -1,4 +1,4 @@
-const CACHE_NAME = "hisab-royal-v1";
+const CACHE_NAME = "cleartally-v3";
 const ASSETS = [
   "./",
   "./index.html",
@@ -22,8 +22,11 @@ self.addEventListener("activate", (e) => {
 });
 
 self.addEventListener("fetch", (e) => {
-  // Firebase API calls ko bypass karein (Firestore khud offline handle karta hai)
-  if (e.request.url.includes("firestore.googleapis.com") || e.request.url.includes("identitytoolkit")) {
+  if (
+    e.request.url.includes("firestore.googleapis.com") ||
+    e.request.url.includes("identitytoolkit") ||
+    e.request.url.includes("securetoken")
+  ) {
     return;
   }
   e.respondWith(
