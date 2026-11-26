@@ -1,4 +1,4 @@
-const CACHE_NAME = "cleartally-offline-v5";
+const CACHE_NAME = "cleartally-offline-v6";
 const CORE_ASSETS = [
   "./",
   "./index.html",
@@ -24,18 +24,18 @@ self.addEventListener("activate", (e) => {
 self.addEventListener("fetch", (e) => {
   const url = e.request.url;
 
-  // Live database, auth aur live stock price API ko network par chhodein
   if (
     url.includes("firestore.googleapis.com") ||
     url.includes("identitytoolkit") ||
     url.includes("securetoken") ||
+    url.includes("corsproxy.io") ||
     url.includes("allorigins.win") ||
+    url.includes("codetabs.com") ||
     url.includes("finance.yahoo.com")
   ) {
     return;
   }
 
-  // Baaki sab (HTML, Firebase JS SDK, Google Fonts) ko Cache-First rakhein
   e.respondWith(
     caches.match(e.request).then((cached) => {
       if (cached) return cached;
