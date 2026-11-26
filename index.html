@@ -6,7 +6,7 @@
   <meta name="theme-color" content="#111c44" />
   <meta name="apple-mobile-web-app-capable" content="yes" />
   <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
-  <title>ClearTally — Expense & Peer Ledger</title>
+  <title>ClearTally — Ledger & Investments</title>
   <link rel="manifest" href="./manifest.json" />
   <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='112' fill='%23111c44'/%3E%3Cpath d='M164 264L224 324L352 188' fill='none' stroke='%23fbbf24' stroke-width='36' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E" />
   <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -125,7 +125,7 @@
     .container {
       width: 100%;
       max-width: 560px;
-      padding: 20px 16px 90px 16px;
+      padding: 20px 16px 96px 16px;
       display: none;
     }
 
@@ -133,7 +133,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      margin-bottom: 20px;
+      margin-bottom: 16px;
     }
 
     .brand {
@@ -205,6 +205,34 @@
       margin-left: 4px;
     }
 
+    /* Main Top Navigation Tabs */
+    .main-tabs {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      background: var(--bg-subtle);
+      padding: 4px;
+      border-radius: 14px;
+      border: 1px solid var(--border);
+      margin-bottom: 16px;
+    }
+
+    .main-tab {
+      padding: 10px;
+      text-align: center;
+      font-size: 0.88rem;
+      font-weight: 700;
+      border-radius: 10px;
+      cursor: pointer;
+      color: var(--text-secondary);
+      transition: all 0.2s;
+    }
+
+    .main-tab.active {
+      background: var(--navy-primary);
+      color: #fbbf24;
+      box-shadow: var(--shadow-sm);
+    }
+
     /* Hero Card */
     .hero-card {
       background: linear-gradient(135deg, var(--navy-primary) 0%, #1b2a63 100%);
@@ -216,12 +244,29 @@
       box-shadow: var(--shadow-lg);
     }
 
+    .hero-top-row {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
     .hero-label {
       font-size: 0.72rem;
       color: #cbd5e1;
       font-weight: 600;
       text-transform: uppercase;
       letter-spacing: 0.8px;
+    }
+
+    .refresh-pill {
+      background: rgba(255, 255, 255, 0.12);
+      border: 1px solid rgba(251, 191, 36, 0.35);
+      color: #fbbf24;
+      font-size: 0.72rem;
+      font-weight: 700;
+      padding: 4px 10px;
+      border-radius: 999px;
+      cursor: pointer;
     }
 
     .hero-net {
@@ -291,6 +336,7 @@
       font-size: 0.9rem;
       font-weight: 700;
       cursor: pointer;
+      white-space: nowrap;
     }
 
     .search-box { margin-bottom: 14px; }
@@ -321,6 +367,7 @@
       align-items: center;
       justify-content: space-between;
       box-shadow: var(--shadow-sm);
+      gap: 10px;
     }
 
     .item-left {
@@ -346,8 +393,8 @@
 
     .item-details { min-width: 0; }
     .item-name { font-size: 0.98rem; font-weight: 700; color: var(--navy-primary); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
-    .item-sub { font-size: 0.8rem; color: var(--text-secondary); margin-top: 2px; font-variant-numeric: tabular-nums; }
-    .item-actions { display: flex; align-items: center; gap: 6px; }
+    .item-sub { font-size: 0.78rem; color: var(--text-secondary); margin-top: 2px; font-variant-numeric: tabular-nums; }
+    .item-actions { display: flex; align-items: center; gap: 6px; flex-shrink: 0; }
 
     .pill-btn {
       width: 36px;
@@ -366,16 +413,69 @@
     .pill-plus { background: var(--emerald-soft); color: var(--emerald); border-color: rgba(5, 150, 105, 0.15); }
     .pill-del { background: transparent; color: var(--text-muted); font-size: 0.9rem; margin-left: 2px; }
 
+    /* Stock Specific Styles */
+    .sub-tabs {
+      display: flex;
+      gap: 8px;
+      margin-bottom: 14px;
+    }
+
+    .sub-tab {
+      flex: 1;
+      padding: 10px;
+      border-radius: 12px;
+      background: var(--bg-white);
+      border: 1px solid var(--border);
+      text-align: center;
+      font-size: 0.84rem;
+      font-weight: 700;
+      color: var(--text-secondary);
+      cursor: pointer;
+    }
+
+    .sub-tab.active {
+      background: var(--amber-soft);
+      border-color: var(--gold-accent);
+      color: var(--navy-primary);
+    }
+
+    .stock-right {
+      text-align: right;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .stock-ltp {
+      font-size: 0.98rem;
+      font-weight: 700;
+      color: var(--navy-primary);
+    }
+
+    .stock-chg {
+      font-size: 0.74rem;
+      font-weight: 700;
+      margin-top: 2px;
+    }
+
+    .zerodha-badge {
+      font-size: 0.65rem;
+      background: #e0f2fe;
+      color: #0369a1;
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-weight: 700;
+      margin-left: 5px;
+    }
+
     .empty-box {
       text-align: center;
-      padding: 48px 20px;
+      padding: 40px 20px;
       background: var(--bg-white);
       border: 1px dashed #d4cfc3;
       border-radius: 20px;
     }
 
     .empty-box h3 { font-size: 1rem; font-weight: 700; color: var(--navy-primary); margin-bottom: 6px; }
-    .empty-box p { font-size: 0.85rem; color: var(--text-secondary); }
+    .empty-box p { font-size: 0.85rem; color: var(--text-secondary); line-height: 1.45; }
 
     /* Bottom Sheet Modals */
     .modal-backdrop {
@@ -434,7 +534,6 @@
       display: block;
     }
 
-    /* Payment Mode & Purpose Chips */
     .chip-group {
       display: flex;
       flex-wrap: wrap;
@@ -489,7 +588,6 @@
       cursor: pointer;
     }
 
-    /* History Log Item */
     .log-row {
       display: flex;
       justify-content: space-between;
@@ -532,7 +630,6 @@
     .txt-red { color: var(--ruby); font-weight: 700; }
     .log-del { color: var(--text-muted); cursor: pointer; margin-left: 10px; font-size: 0.85rem; }
 
-    /* Admin User Row */
     .user-row {
       display: flex;
       justify-content: space-between;
@@ -574,7 +671,7 @@
         <path d="M164 264L224 324L352 188" fill="none" stroke="#fbbf24" stroke-width="36" stroke-linecap="round" stroke-linejoin="round"/>
       </svg>
       <h2>ClearTally</h2>
-      <p>Sign in once with Google to track your daily expenses and peer balances securely.</p>
+      <p>Sign in once with Google to track your daily expenses, peer balances, and live stock portfolio.</p>
       <button class="google-btn" onclick="loginGoogle()">Continue with Google</button>
     </div>
   </div>
@@ -612,31 +709,74 @@
       </div>
     </header>
 
-    <div class="hero-card">
-      <div class="hero-label">Net Balance</div>
-      <div class="hero-net" id="netTotal">₹0</div>
-      <div class="hero-stats">
-        <div class="mini-stat">
-          <span>Total Credit (+)</span>
-          <strong class="gold-credit" id="creditTotal">₹0</strong>
-        </div>
-        <div class="mini-stat">
-          <span>Total Debit (−)</span>
-          <strong class="gold-debit" id="debitTotal">₹0</strong>
+    <!-- Primary Switch: Ledger vs Investments -->
+    <div class="main-tabs">
+      <div class="main-tab active" id="tabLedger" onclick="switchMainTab('ledger')">📒 Ledger</div>
+      <div class="main-tab" id="tabInvest" onclick="switchMainTab('invest')">📈 Investments</div>
+    </div>
+
+    <!-- ==================== VIEW 1: LEDGER ==================== -->
+    <div id="ledgerView">
+      <div class="hero-card">
+        <div class="hero-label">Net Balance</div>
+        <div class="hero-net" id="netTotal">₹0</div>
+        <div class="hero-stats">
+          <div class="mini-stat">
+            <span>Total Credit (+)</span>
+            <strong class="gold-credit" id="creditTotal">₹0</strong>
+          </div>
+          <div class="mini-stat">
+            <span>Total Debit (−)</span>
+            <strong class="gold-debit" id="debitTotal">₹0</strong>
+          </div>
         </div>
       </div>
+
+      <div class="create-bar">
+        <input type="text" id="entityInput" placeholder="Add person or category (e.g. Rahul, Food)..." onkeydown="if(event.key==='Enter') addEntity()" />
+        <button class="create-btn" onclick="addEntity()">+ Add</button>
+      </div>
+
+      <div class="search-box" id="searchBox" style="display:none;">
+        <input type="text" id="searchField" placeholder="Search person or category..." oninput="render()" />
+      </div>
+
+      <div class="cards-list" id="cardsList"></div>
     </div>
 
-    <div class="create-bar">
-      <input type="text" id="entityInput" placeholder="Add person or category (e.g. Rahul, Food)..." onkeydown="if(event.key==='Enter') addEntity()" />
-      <button class="create-btn" onclick="addEntity()">+ Add</button>
-    </div>
+    <!-- ==================== VIEW 2: INVESTMENTS & WATCHLIST ==================== -->
+    <div id="investView" style="display:none;">
+      <div class="hero-card">
+        <div class="hero-top-row">
+          <div class="hero-label">Zerodha Portfolio Value</div>
+          <button class="refresh-pill" id="refreshStocksBtn" onclick="refreshAllPrices()">↻ Live Refresh</button>
+        </div>
+        <div class="hero-net" id="portCurrent">₹0</div>
+        <div class="hero-stats">
+          <div class="mini-stat">
+            <span>Invested Amount</span>
+            <strong id="portInvested">₹0</strong>
+          </div>
+          <div class="mini-stat">
+            <span>Total P&L (Live)</span>
+            <strong class="gold-credit" id="portPnl">₹0 (0%)</strong>
+          </div>
+        </div>
+      </div>
 
-    <div class="search-box" id="searchBox" style="display:none;">
-      <input type="text" id="searchField" placeholder="Search person or category..." oninput="render()" />
-    </div>
+      <div class="sub-tabs">
+        <div class="sub-tab active" id="subHoldings" onclick="switchStockSub('holdings')">💼 My Holdings</div>
+        <div class="sub-tab" id="subWatchlist" onclick="switchStockSub('watchlist')">👁 Watchlist</div>
+      </div>
 
-    <div class="cards-list" id="cardsList"></div>
+      <div class="create-bar">
+        <button class="create-btn" style="width:100%; padding:14px;" onclick="openStockModal()">
+          + Add Stock (Zerodha / Watchlist)
+        </button>
+      </div>
+
+      <div class="cards-list" id="stocksList"></div>
+    </div>
   </div>
 
   <!-- Enhanced Transaction Sheet -->
@@ -661,6 +801,35 @@
 
       <input type="text" id="noteField" placeholder="Specific details (e.g. Burger, Bus ticket, Rent)..." onkeydown="if(event.key==='Enter') saveTx()" />
       <button class="submit-btn" id="saveTxBtn" onclick="saveTx()">Save Entry</button>
+    </div>
+  </div>
+
+  <!-- Add / Edit Stock Sheet -->
+  <div class="modal-backdrop" id="stockModal" onclick="bgClose(event, 'stockModal')">
+    <div class="bottom-sheet" onclick="event.stopPropagation()">
+      <div class="sheet-top">
+        <h3>Add Indian Stock (NSE/BSE)</h3>
+        <div class="close-x" onclick="closeModal('stockModal')">✕</div>
+      </div>
+
+      <span class="field-label">Add To</span>
+      <div class="chip-group" id="stockTypeChips">
+        <div class="chip selected" onclick="selectStockMode('holding', this)">💼 Zerodha Holding</div>
+        <div class="chip" onclick="selectStockMode('watch', this)">👁 Watchlist Only</div>
+      </div>
+
+      <span class="field-label">NSE Stock Symbol</span>
+      <input type="text" id="stockSymbolInput" placeholder="e.g. RELIANCE, TCS, TATAMOTORS, HDFCBANK" style="text-transform:uppercase;" />
+
+      <div id="holdingFields">
+        <span class="field-label">Quantity (Shares)</span>
+        <input type="number" id="stockQtyInput" placeholder="e.g. 10" inputmode="decimal" />
+
+        <span class="field-label">Avg. Buy Price (₹)</span>
+        <input type="number" id="stockAvgInput" placeholder="e.g. 2450.50" inputmode="decimal" />
+      </div>
+
+      <button class="submit-btn" id="saveStockBtn" onclick="saveStock()">Fetch Live Price & Save</button>
     </div>
   </div>
 
@@ -691,9 +860,6 @@
     import { getAuth, GoogleAuthProvider, signInWithPopup, onAuthStateChanged, signOut, setPersistence, browserLocalPersistence } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-auth.js";
     import { getFirestore, doc, getDoc, setDoc, updateDoc, collection, onSnapshot, enableIndexedDbPersistence } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
-    // ====================================================
-    // YAHAN APNI EXACT ADMIN GMAIL ID LIKHEIN
-    // ====================================================
     const ADMIN_EMAIL = "amanpandey6340@gmail.com";
 
     const firebaseConfig = {
@@ -718,8 +884,15 @@
     let unsubRecords = null;
     let unsubProfile = null;
     let unsubAdminUsers = null;
+
     let records = {};
+    let investments = []; // { id, symbol, listType: 'holding'|'watch', qty, avgPrice, lastPrice, prevClose, name }
     let allUsers = [];
+
+    let currentMainTab = "ledger";
+    let currentStockSub = "holdings";
+    let stockModalMode = "holding";
+    let autoRefreshTimer = null;
 
     let currentTarget = null;
     let currentType = null;
@@ -765,6 +938,7 @@
       if (unsubRecords) unsubRecords();
       if (unsubProfile) unsubProfile();
       if (unsubAdminUsers) unsubAdminUsers();
+      if (autoRefreshTimer) clearInterval(autoRefreshTimer);
       await signOut(auth);
     };
 
@@ -772,6 +946,7 @@
       if (!user) {
         showScreen("authScreen");
         records = {};
+        investments = [];
         return;
       }
 
@@ -820,8 +995,11 @@
       unsubRecords = onSnapshot(docRef, (snap) => {
         document.getElementById("syncLabel").innerText = "Cloud Synced";
         document.getElementById("dotStatus").style.background = "var(--emerald)";
-        records = snap.exists() ? (snap.data().records || {}) : {};
+        const data = snap.exists() ? snap.data() : {};
+        records = data.records || {};
+        investments = data.investments || [];
         render();
+        renderStocks();
       }, () => {
         document.getElementById("syncLabel").innerText = "Offline Saved";
         document.getElementById("dotStatus").style.background = "var(--gold-accent)";
@@ -889,10 +1067,226 @@
     async function syncCloud() {
       if (!docRef) return;
       document.getElementById("syncLabel").innerText = "Saving...";
-      await setDoc(docRef, { records });
+      await setDoc(docRef, { records, investments }, { merge: true });
       document.getElementById("syncLabel").innerText = "Cloud Synced";
     }
 
+    // ==================== TAB SWITCHING ====================
+    window.switchMainTab = function(tab) {
+      currentMainTab = tab;
+      document.getElementById("tabLedger").classList.toggle("active", tab === "ledger");
+      document.getElementById("tabInvest").classList.toggle("active", tab === "invest");
+      document.getElementById("ledgerView").style.display = tab === "ledger" ? "block" : "none";
+      document.getElementById("investView").style.display = tab === "invest" ? "block" : "none";
+
+      if (tab === "invest") {
+        refreshAllPrices();
+        if (!autoRefreshTimer) {
+          autoRefreshTimer = setInterval(() => {
+            if (currentMainTab === "invest") refreshAllPrices(true);
+          }, 30000); // Auto-refresh every 30s while viewing investments
+        }
+      }
+    };
+
+    window.switchStockSub = function(sub) {
+      currentStockSub = sub;
+      document.getElementById("subHoldings").classList.toggle("active", sub === "holdings");
+      document.getElementById("subWatchlist").classList.toggle("active", sub === "watchlist");
+      renderStocks();
+    };
+
+    // ==================== LIVE FREE STOCK PRICE FETCHER ====================
+    async function fetchLiveNSEQuote(rawSymbol) {
+      let sym = rawSymbol.trim().toUpperCase();
+      if (!sym.endsWith(".NS") && !sym.endsWith(".BO")) {
+        sym = sym + ".NS";
+      }
+      const yahooUrl = `https://query1.finance.yahoo.com/v8/finance/chart/${encodeURIComponent(sym)}?interval=1d&range=1d`;
+      const proxyUrl = `https://api.allorigins.win/get?url=${encodeURIComponent(yahooUrl)}`;
+
+      const res = await fetch(proxyUrl);
+      if (!res.ok) throw new Error("Network error");
+      const wrapped = await res.json();
+      const parsed = JSON.parse(wrapped.contents);
+
+      if (!parsed.chart || !parsed.chart.result || !parsed.chart.result[0]) {
+        throw new Error("Stock symbol not found");
+      }
+
+      const meta = parsed.chart.result[0].meta;
+      return {
+        symbol: rawSymbol.trim().toUpperCase().replace(".NS", "").replace(".BO", ""),
+        name: meta.shortName || rawSymbol.toUpperCase(),
+        lastPrice: Number(meta.regularMarketPrice || 0),
+        prevClose: Number(meta.chartPreviousClose || meta.previousClose || meta.regularMarketPrice || 0)
+      };
+    }
+
+    window.openStockModal = function() {
+      document.getElementById("stockSymbolInput").value = "";
+      document.getElementById("stockQtyInput").value = "";
+      document.getElementById("stockAvgInput").value = "";
+      selectStockMode(currentStockSub === "watchlist" ? "watch" : "holding", document.querySelectorAll("#stockTypeChips .chip")[currentStockSub === "watchlist" ? 1 : 0]);
+      document.getElementById("stockModal").classList.add("active");
+    };
+
+    window.selectStockMode = function(mode, el) {
+      stockModalMode = mode;
+      document.querySelectorAll("#stockTypeChips .chip").forEach(c => c.classList.remove("selected"));
+      if (el) el.classList.add("selected");
+      document.getElementById("holdingFields").style.display = mode === "holding" ? "block" : "none";
+    };
+
+    window.saveStock = async function() {
+      const symInput = document.getElementById("stockSymbolInput").value.trim().toUpperCase();
+      const qty = parseFloat(document.getElementById("stockQtyInput").value) || 0;
+      const avgPrice = parseFloat(document.getElementById("stockAvgInput").value) || 0;
+
+      if (!symInput) return alert("Please enter an NSE stock symbol (e.g. RELIANCE, TCS)");
+      if (stockModalMode === "holding" && (qty <= 0 || avgPrice <= 0)) {
+        return alert("Please enter valid Quantity and Average Buy Price.");
+      }
+
+      const btn = document.getElementById("saveStockBtn");
+      btn.innerText = "Fetching Live Price...";
+      btn.disabled = true;
+
+      try {
+        const quote = await fetchLiveNSEQuote(symInput);
+        investments.unshift({
+          id: Date.now(),
+          symbol: quote.symbol,
+          name: quote.name,
+          listType: stockModalMode,
+          qty: stockModalMode === "holding" ? qty : 0,
+          avgPrice: stockModalMode === "holding" ? avgPrice : 0,
+          lastPrice: quote.lastPrice,
+          prevClose: quote.prevClose,
+          updatedAt: new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' })
+        });
+
+        closeModal("stockModal");
+        currentStockSub = stockModalMode === "holding" ? "holdings" : "watchlist";
+        switchStockSub(currentStockSub);
+        await syncCloud();
+      } catch (err) {
+        alert("Could not find symbol '" + symInput + "'. Make sure you use the exact NSE symbol (e.g. TATAMOTORS, INFY, SBIN).");
+      } finally {
+        btn.innerText = "Fetch Live Price & Save";
+        btn.disabled = false;
+      }
+    };
+
+    window.refreshAllPrices = async function(silent = false) {
+      if (investments.length === 0) return;
+      const btn = document.getElementById("refreshStocksBtn");
+      if (!silent) btn.innerText = "Updating...";
+
+      let updated = false;
+      for (let i = 0; i < investments.length; i++) {
+        try {
+          const quote = await fetchLiveNSEQuote(investments[i].symbol);
+          investments[i].lastPrice = quote.lastPrice;
+          investments[i].prevClose = quote.prevClose;
+          investments[i].updatedAt = new Date().toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+          updated = true;
+        } catch (e) {}
+      }
+
+      if (updated) {
+        renderStocks();
+        await syncCloud();
+      }
+      if (!silent) btn.innerText = "↻ Live Refresh";
+    };
+
+    window.removeStock = async function(id) {
+      if (confirm("Remove this stock from your list?")) {
+        investments = investments.filter(s => s.id !== id);
+        renderStocks();
+        await syncCloud();
+      }
+    };
+
+    function renderStocks() {
+      const list = document.getElementById("stocksList");
+
+      // Calculate Zerodha Portfolio Totals
+      let totalInvested = 0;
+      let totalCurrent = 0;
+      investments.filter(s => s.listType === "holding").forEach(s => {
+        totalInvested += s.qty * s.avgPrice;
+        totalCurrent += s.qty * (s.lastPrice || s.avgPrice);
+      });
+
+      const pnl = totalCurrent - totalInvested;
+      const pnlPct = totalInvested > 0 ? ((pnl / totalInvested) * 100).toFixed(2) : "0.00";
+
+      document.getElementById("portCurrent").innerText = `₹${totalCurrent.toLocaleString('en-IN', { maximumFractionDigits: 2 })}`;
+      document.getElementById("portInvested").innerText = `₹${totalInvested.toLocaleString('en-IN', { maximumFractionDigits: 2 })}`;
+      const pnlEl = document.getElementById("portPnl");
+      pnlEl.innerText = `${pnl >= 0 ? '+' : '−'}₹${Math.abs(pnl).toLocaleString('en-IN', { maximumFractionDigits: 2 })} (${pnl >= 0 ? '+' : ''}${pnlPct}%)`;
+      pnlEl.className = pnl >= 0 ? "gold-credit" : "gold-debit";
+
+      const filtered = investments.filter(s =>
+        currentStockSub === "holdings" ? s.listType === "holding" : s.listType === "watch"
+      );
+
+      if (filtered.length === 0) {
+        list.innerHTML = `
+          <div class="empty-box">
+            <h3>${currentStockSub === "holdings" ? "No Zerodha Holdings Added" : "Your Watchlist is Empty"}</h3>
+            <p>${currentStockSub === "holdings"
+              ? "Add the stocks you bought via Zerodha (Symbol, Qty & Avg Price) to track live profit/loss automatically."
+              : "Add stocks you want to track live during market hours without investing yet."}</p>
+          </div>
+        `;
+        return;
+      }
+
+      list.innerHTML = filtered.map(s => {
+        const style = getBadgeStyle(s.symbol);
+        const dayDiff = (s.lastPrice || 0) - (s.prevClose || s.lastPrice || 0);
+        const dayPct = s.prevClose ? ((dayDiff / s.prevClose) * 100).toFixed(2) : "0.00";
+        const isDayUp = dayDiff >= 0;
+
+        let subLine = "";
+        if (s.listType === "holding") {
+          const stockPnl = (s.lastPrice - s.avgPrice) * s.qty;
+          const isProfit = stockPnl >= 0;
+          subLine = `${s.qty} Qty · Avg ₹${s.avgPrice} · <span style="color:${isProfit ? 'var(--emerald)' : 'var(--ruby)'}; font-weight:700;">P&L: ${isProfit ? '+' : '−'}₹${Math.abs(stockPnl).toFixed(1)}</span>`;
+        } else {
+          subLine = `${s.name} · Updated ${s.updatedAt || 'Now'}`;
+        }
+
+        return `
+          <div class="item-card">
+            <div class="item-left">
+              <div class="badge-icon" style="background:${style.bg}; color:${style.fg}; border:1px solid ${style.border};">
+                ${s.symbol.slice(0, 2)}
+              </div>
+              <div class="item-details">
+                <div class="item-name">
+                  ${s.symbol}
+                  ${s.listType === "holding" ? '<span class="zerodha-badge">ZERODHA</span>' : ''}
+                </div>
+                <div class="item-sub">${subLine}</div>
+              </div>
+            </div>
+            <div class="stock-right">
+              <div class="stock-ltp">₹${Number(s.lastPrice || 0).toLocaleString('en-IN', { minimumFractionDigits: 2, maximumFractionDigits: 2 })}</div>
+              <div class="stock-chg" style="color:${isDayUp ? 'var(--emerald)' : 'var(--ruby)'};">
+                ${isDayUp ? '▲' : '▼'} ${Math.abs(dayDiff).toFixed(2)} (${isDayUp ? '+' : ''}${dayPct}%)
+              </div>
+            </div>
+            <button class="pill-btn pill-del" onclick="removeStock(${s.id})" title="Delete">🗑</button>
+          </div>
+        `;
+      }).join("");
+    }
+
+    // ==================== LEDGER FUNCTIONS ====================
     window.addEntity = async function() {
       const input = document.getElementById("entityInput");
       const name = input.value.trim();
@@ -1077,16 +1471,19 @@
     };
 
     window.exportCSV = function() {
-      let csv = "Name/Category,Type,Amount,Payment Mode,Purpose,Note,Timestamp\n";
+      let csv = "Section,Name/Symbol,Type/Qty,Amount/AvgPrice,Mode/LTP,Purpose,Note,Timestamp\n";
       Object.keys(records).forEach(k => {
         records[k].forEach(t => {
-          csv += `"${k}","${t.type}",${t.amount},"${t.mode || 'Online'}","${t.purpose || ''}","${t.note}","${t.timestamp}"\n`;
+          csv += `"Ledger","${k}","${t.type}",${t.amount},"${t.mode || 'Online'}","${t.purpose || ''}","${t.note}","${t.timestamp}"\n`;
         });
+      });
+      investments.forEach(s => {
+        csv += `"Investment","${s.symbol}","${s.listType === 'holding' ? s.qty + ' Qty' : 'Watchlist'}",${s.avgPrice},${s.lastPrice},"Zerodha","${s.name}","${s.updatedAt || ''}"\n`;
       });
       const blob = new Blob([csv], { type: "text/csv" });
       const a = document.createElement("a");
       a.href = URL.createObjectURL(blob);
-      a.download = `ClearTally_Ledger_${new Date().toISOString().slice(0, 10)}.csv`;
+      a.download = `ClearTally_Full_Report_${new Date().toISOString().slice(0, 10)}.csv`;
       a.click();
     };
   </script>

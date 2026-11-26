@@ -1,4 +1,4 @@
-const CACHE_NAME = "cleartally-offline-v4";
+const CACHE_NAME = "cleartally-offline-v5";
 const CORE_ASSETS = [
   "./",
   "./index.html",
@@ -24,11 +24,13 @@ self.addEventListener("activate", (e) => {
 self.addEventListener("fetch", (e) => {
   const url = e.request.url;
 
-  // Sirf live database aur auth API calls ko network par chhodein
+  // Live database, auth aur live stock price API ko network par chhodein
   if (
     url.includes("firestore.googleapis.com") ||
     url.includes("identitytoolkit") ||
-    url.includes("securetoken")
+    url.includes("securetoken") ||
+    url.includes("allorigins.win") ||
+    url.includes("finance.yahoo.com")
   ) {
     return;
   }
